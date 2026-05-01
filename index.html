@@ -1,23 +1,25 @@
 <!DOCTYPE html>
-<html lang="si">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI My Cat - God Mode</title>
+    <title>AI My Cat - Pro Edition</title>
     <style>
         body { 
             background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
-            font-family: 'Segoe UI', sans-serif; height: 100vh; margin: 0; display: flex; align-items: center; justify-content: center; color: white;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            height: 100vh; margin: 0; display: flex; align-items: center; justify-content: center; color: white;
         }
-        .app-card {
+        .container {
             background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(15px); width: 90%; max-width: 400px; padding: 30px;
             border-radius: 40px; border: 1px solid rgba(255,255,255,0.2); text-align: center; box-shadow: 0 25px 50px rgba(0,0,0,0.5);
         }
         .cat-box img {
-            width: 170px; height: 170px; border-radius: 50%; border: 5px solid #00f2fe; object-fit: cover; animation: pulse 2s infinite;
+            width: 170px; height: 170px; border-radius: 50%; border: 5px solid #00f2fe; object-fit: cover;
+            animation: pulse 2s infinite;
         }
-        @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(0, 242, 254, 0.7); } 70% { box-shadow: 0 0 0 20px rgba(0, 242, 254, 0); } 100% { box-shadow: 0 0 0 0 rgba(0, 242, 254, 0); } }
-        .status-text { margin: 20px 0; font-size: 17px; font-weight: 500; min-height: 100px; max-height: 160px; overflow-y: auto; text-shadow: 1px 1px 2px black; }
+        @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(0, 242, 254, 0.7); } 70% { box-shadow: 0 0 0 15px rgba(0, 242, 254, 0); } 100% { box-shadow: 0 0 0 0 rgba(0, 242, 254, 0); } }
+        #status { margin: 20px 0; font-size: 17px; font-weight: 500; min-height: 100px; max-height: 160px; overflow-y: auto; color: #00f2fe; }
         input { 
             width: 85%; padding: 15px; border-radius: 20px; border: none; font-size: 16px; margin-bottom: 10px; outline: none; background: rgba(255,255,255,0.9); color: #333;
         }
@@ -25,23 +27,24 @@
             padding: 15px; border: none; border-radius: 20px; font-weight: bold; font-size: 16px; cursor: pointer; transition: 0.3s; width: 100%; margin-bottom: 10px;
         }
         .btn-ask { background: #00f2fe; color: #000; }
-        .btn-mic { background: #ff758c; color: white; }
+        .btn-voice { background: #ff758c; color: white; }
+        .btn-ask:hover, .btn-voice:hover { transform: scale(1.02); opacity: 0.9; }
     </style>
 </head>
 <body>
 
-<div class="app-card">
-    <h2 style="letter-spacing: 2px;">SMART AI CAT 🐾</h2>
+<div class="container">
+    <h2 style="letter-spacing: 2px; color: #00f2fe;">SMART AI CAT 🐾</h2>
     <div class="cat-box">
-        <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHp1eHRndmt3Z3o1eHByazR6eXFid3R5eHh5eHh5eHh5eHh5eCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/MDJ9IbM3vUzUtHyBnL/giphy.gif" alt="Thinking Cat">
+        <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHp1eHRndmt3Z3o1eHByazR6eXFid3R5eHh5eHh5eHh5eHh5eCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/MDJ9IbM3vUzUtHyBnL/giphy.gif" alt="AI Cat">
     </div>
 
-    <div id="status" class="status-text">මම දැන් ලෝකයේ ඕනෑම සජීවී දෙයක් ගැන දන්නවා මචං! ඕනෑම දෙයක් අහන්න...</div>
+    <div id="status">මම දැන් ලෑස්තියි Boss! ඕනෑම දෙයක් ඉංග්‍රීසියෙන් අහන්න...</div>
 
-    <input type="text" id="user-input" placeholder="Ask live scores, news or anything...">
+    <input type="text" id="userInput" placeholder="Ask time, date or anything...">
     
     <button class="btn-ask" onclick="askCat()">පූසාගෙන් අහන්න</button>
-    <button class="btn-mic" onclick="startVoice()">🎤 Voice Live</button>
+    <button class="btn-voice" onclick="startVoice()">🎤 Voice Live</button>
 </div>
 
 <script>
@@ -51,60 +54,78 @@
     function startVoice() {
         if(!recognition) return;
         recognition.start();
-        document.getElementById('status').innerText = "මම අහගෙන ඉන්නේ... 👂";
+        document.getElementById('status').innerText = "මම අහගෙන ඉන්නේ Boss... 👂";
     }
 
     if(recognition) {
         recognition.onresult = function(event) {
-            document.getElementById('user-input').value = event.results[0][0].transcript;
+            document.getElementById('userInput').value = event.results[0][0].transcript;
             askCat();
         };
     }
 
     async function askCat() {
-        let input = document.getElementById('user-input').value.trim();
+        let input = document.getElementById('userInput').value.trim();
         let status = document.getElementById('status');
         if (!input) return;
 
-        status.innerText = "ම්ම්ම්... මම ඉන්ටර්නෙට් එකේ බලනවා... 🌐";
+        status.innerText = "Thinking... 🧠🐾";
 
-        try {
-            // Live Search Logic: DuckDuckGo API හරහා සජීවී තොරතුරු ඇදීම
-            // සටහන: සජීවී ලකුණු සඳහා අපි DuckDuckGo Instant Answer API එක පාවිච්චි කරමු
-            let res = await fetch(`https://api.duckduckgo.com/?q=${encodeURIComponent(input)}&format=json&no_html=1`);
-            let data = await res.json();
+        let lowerInput = input.toLowerCase();
+        let responseText = "";
 
-            let responseText = "";
-
-            if (data.AbstractText) {
-                responseText = data.AbstractText;
-            } else if (data.Answer) {
-                responseText = data.Answer;
-            } else if (data.RelatedTopics && data.RelatedTopics.length > 0) {
-                responseText = data.RelatedTopics[0].Text;
-            } else {
-                // සජීවී දේවල් නැත්නම් AI බුද්ධිය පාවිච්චි කිරීම
-                responseText = "I checked live sources for '" + input + "'. While I'm still processing deep live data, it seems to be an interesting topic! Ask me more specifically.";
-            }
-
-            status.innerText = responseText;
-            speak(responseText);
-
-        } catch (e) {
-            status.innerText = "සජීවීව තොරතුරු ගන්න පොඩි අවුලක් මචං!";
+        // 1. වෙලාව සහ දිනය (Local Logic)
+        if (lowerInput.includes("time")) {
+            let time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            responseText = "The time is exactly " + time + ", Boss! Time is precious.";
+        } 
+        else if (lowerInput.includes("date") || lowerInput.includes("today")) {
+            let date = new Date().toDateString();
+            responseText = "Today is " + date + ". Let's make it a productive day!";
         }
+        // 2. මිත්‍රශීලී කතාව (Friendly Chat)
+        else if (lowerInput.includes("hi") || lowerInput.includes("hello")) {
+            responseText = "Hello my dear friend! I am your smart AI cat. How can I help you today?";
+        }
+        else if (lowerInput.includes("how are you")) {
+            responseText = "I'm feeling purr-fectly fine! Just waiting for your brilliant questions.";
+        }
+        // 3. සජීවී සහ සාමාන්‍ය දැනුම සෙවීම (Live Search)
+        else {
+            try {
+                const res = await fetch(`https://api.duckduckgo.com/?q=${encodeURIComponent(input)}&format=json&no_html=1`);
+                const data = await res.json();
+                
+                if (data.AbstractText) {
+                    responseText = data.AbstractText;
+                } else if (data.RelatedTopics && data.RelatedTopics.length > 0) {
+                    responseText = data.RelatedTopics[0].Text;
+                } else {
+                    responseText = "That's a very interesting question! While I'm still learning about " + input + ", I'll try to find more details for you soon.";
+                }
+            } catch (e) {
+                responseText = "Sorry Boss, I'm having trouble connecting to the internet.";
+            }
+        }
+
+        status.innerText = responseText;
+        speak(responseText);
     }
 
     function speak(text) {
         window.speechSynthesis.cancel(); 
         let utterance = new SpeechSynthesisUtterance(text);
         let voices = window.speechSynthesis.getVoices();
-        // වඩාත් පැහැදිලි "Neural" වැනි හඬක් තේරීම
-        utterance.voice = voices.find(v => v.name.includes('Google')) || voices[0];
-        utterance.pitch = 1.3;
-        utterance.rate = 1.0;
+        
+        // මනුස්ස හඬට සමාන වොයිස් එකක් සෙවීම
+        utterance.voice = voices.find(v => v.name.includes('Natural')) || voices.find(v => v.lang.includes('en-US')) || voices[0];
+        
+        utterance.pitch = 1.3; // හුරතල් පූසාගේ කටහඬ
+        utterance.rate = 0.95; // සන්සුන් කතා විලාසය
         window.speechSynthesis.speak(utterance);
     }
+
+    window.speechSynthesis.onvoiceschanged = () => window.speechSynthesis.getVoices();
 </script>
 
 </body>
