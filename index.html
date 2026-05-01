@@ -1,31 +1,66 @@
-// පූසාගේ නව "මොළය" (Simplified AI Logic)
-async function askCat() {
-    let input = document.getElementById('user-input').value;
-    let response = "";
+<!DOCTYPE html>
+<html lang="si">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Talking AI Cat</title>
+    <style>
+        body { font-family: sans-serif; text-align: center; background-color: #f0f0f0; padding: 20px; }
+        .cat-container { background: white; padding: 20px; border-radius: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        img { width: 200px; border-radius: 50%; }
+        input { padding: 10px; width: 80%; border-radius: 10px; border: 1px solid #ccc; margin: 10px 0; }
+        button { padding: 10px 20px; background: #4CAF50; color: white; border: none; border-radius: 10px; cursor: pointer; }
+        #response { margin-top: 20px; font-weight: bold; color: #333; }
+    </style>
+</head>
+<body>
 
-    // 1. ගණිතමය හැකියාව (Calculator)
-    if (/[0-9]/.test(input) && (input.includes('+') || input.includes('-') || input.includes('*') || input.includes('/'))) {
-        try { response = "ඕක සුළු වැඩක්නේ, උත්තරේ " + eval(input); } catch(e) { response = "ගණන් හදන්න ගිහින් පටලුනා බං!"; }
-    }
+<div class="cat-container">
+    <h1>Talking AI Cat 🐾</h1>
+    <img src="https://placekitten.com/200/200" alt="AI Cat">
     
-    // 2. දින වකවානු (Date/Time)
-    else if (input.includes("වෙලාව") || input.includes("time")) {
-        response = "දැන් වෙලාව " + new Date().toLocaleTimeString();
-    }
+    <div id="response">මියා‍ව්! මොනවද මචං දැනගන්න ඕනේ?</div>
     
-    // 3. මම (Gemini) වගේ හිතලා උත්තර දීම (Fetching Free AI response)
-    else {
-        // මෙතනදී අපි පූසව "DuckDuckGo AI" වගේ නොමිලේ දෙන AI සර්විස් එකකට ලින්ක් කරනවා
-        response = "මියා‍ව්! මම ඒ ගැන හොයලා බැලුවා. ඔයා අහන්නේ " + input + " ගැන නේද? මට මේ ගැන තව ටිකක් විස්තර කියන්න පුළුවන්ද?";
+    <input type="text" id="user-input" placeholder="මෙතන ටයිප් කරන්න...">
+    <br>
+    <button onclick="askCat()">පූසාගෙන් අහන්න</button>
+</div>
+
+<script>
+    async function askCat() {
+        let input = document.getElementById('user-input').value;
+        let responseBox = document.getElementById('response');
+        let responseText = "";
+
+        if (!input) return;
+
+        // 1. සරල ගණන් හැදීම
+        if (/[0-9]/.test(input) && (input.includes('+') || input.includes('-') || input.includes('*') || input.includes('/'))) {
+            try { responseText = "ඕක සුළු වැඩක්නේ, උත්තරේ " + eval(input); } catch(e) { responseText = "ගණන් පැටලුනා බං!"; }
+        }
+        // 2. වෙලාව ඇසීම
+        else if (input.includes("වෙලාව") || input.includes("time")) {
+            responseText = "දැන් වෙලාව " + new Date().toLocaleTimeString();
+        }
+        // 3. සාමාන්‍ය කතාබහ
+        else if (input.includes("හලෝ") || input.includes("hello")) {
+            responseText = "මියා‍ව්! හලෝ මචං, මම ඉන්නවා. අද මොකද කරන්නේ?";
+        }
+        else {
+            responseText = "මියා‍ව්! මම ඒ ගැන හොයලා බලන්නම්. ඔයා අහන්නේ " + input + " ගැන නේද?";
+        }
+
+        responseBox.innerText = responseText;
+        speak(responseText);
     }
 
-    // හඬ ලබා දීම (Voice)
-    speak(response);
-}
+    function speak(text) {
+        let msg = new SpeechSynthesisUtterance();
+        msg.text = text;
+        msg.lang = 'si-LK'; 
+        window.speechSynthesis.speak(msg);
+    }
+</script>
 
-function speak(text) {
-    let msg = new SpeechSynthesisUtterance();
-    msg.text = text;
-    msg.lang = 'si-LK'; // සිංහලෙන් උත්සාහ කිරීමට
-    window.speechSynthesis.speak(msg);
-}
+</body>
+</html>
