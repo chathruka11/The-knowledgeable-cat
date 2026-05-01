@@ -3,67 +3,60 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Original AI Talking Cat</title>
+    <title>AI My Cat - Smart Edition</title>
     <style>
         body { 
-            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            height: 100vh; margin: 0; display: flex; align-items: center; justify-content: center;
+            background: linear-gradient(135deg, #74ebd5 0%, #acb6e5 100%);
+            font-family: sans-serif; height: 100vh; margin: 0; 
+            display: flex; align-items: center; justify-content: center;
         }
         .app-card {
-            background: rgba(255, 255, 255, 0.9);
-            width: 90%; max-width: 380px; padding: 25px;
+            background: white; width: 90%; max-width: 380px; padding: 25px;
             border-radius: 40px; box-shadow: 0 15px 35px rgba(0,0,0,0.2);
-            text-align: center; border: 4px solid #fff;
+            text-align: center;
         }
         .cat-box img {
-            width: 180px; height: 180px; border-radius: 50%;
-            border: 6px solid #ff9a9e; box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            background: white; object-fit: contain;
+            width: 150px; height: 150px; border-radius: 50%;
+            border: 5px solid #667eea; object-fit: cover;
         }
-        .status-text { margin: 15px 0; font-size: 18px; font-weight: bold; color: #444; height: 45px; }
+        .status-text { margin: 15px 0; font-size: 17px; font-weight: bold; color: #333; min-height: 50px; }
         input { 
             width: 85%; padding: 15px; border-radius: 20px; border: 2px solid #ddd;
             font-size: 16px; margin-bottom: 10px; outline: none;
         }
-        .btn-group { display: flex; gap: 10px; flex-direction: column; }
         button {
             padding: 15px; border: none; border-radius: 20px; font-weight: bold;
-            font-size: 16px; cursor: pointer; transition: 0.3s;
+            font-size: 16px; cursor: pointer; transition: 0.3s; width: 100%; margin-bottom: 10px;
         }
         .btn-ask { background: #667eea; color: white; }
         .btn-mic { background: #ff758c; color: white; }
-        .btn-ask:hover, .btn-mic:hover { opacity: 0.8; transform: scale(1.02); }
     </style>
 </head>
 <body>
 
 <div class="app-card">
-    <h2 style="margin-top: 0;">AI My Cat 🐾</h2>
-    
+    <h2>AI My Cat 🐾</h2>
     <div class="cat-box">
-        <img id="cat-img" src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHp1eHRndmt3Z3o1eHByazR6eXFid3R5eHh5eHh5eHh5eHh5eCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/MDJ9IbM3vUzUtHyBnL/giphy.gif" alt="Animated Cat">
+        <img src="https://placekitten.com/300/300" alt="AI Cat">
     </div>
 
-    <div id="status" class="status-text">මියා‍ව්! මොනවද බොස් කරන්න ඕනේ?</div>
+    <div id="status" class="status-text">මියා‍ව්! ඕනෑම දෙයක් අහන්න මචං...</div>
 
-    <input type="text" id="user-input" placeholder="මෙතන ලියන්න හෝ Voice ඔබන්න...">
+    <input type="text" id="user-input" placeholder="ප්‍රශ්නයක් ටයිප් කරන්න...">
     
-    <div class="btn-group">
-        <button class="btn-ask" onclick="askCat()">පූසාට කියන්න</button>
-        <button class="btn-mic" onclick="startVoice()">🎤 කටින් කියන්න (Voice)</button>
-    </div>
+    <button class="btn-ask" onclick="askCat()">පූසාට කියන්න</button>
+    <button class="btn-mic" onclick="startVoice()">🎤 Voice</button>
 </div>
 
 <script>
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
     const recognition = (SpeechRecognition) ? new SpeechRecognition() : null;
-    if(recognition) recognition.lang = 'si-LK';
+    if(recognition) recognition.lang = 'en-US'; // Voice support
 
     function startVoice() {
-        if(!recognition) { alert("ඔයාගේ Browser එක Voice support කරන්නේ නෑ මචං."); return; }
+        if(!recognition) return;
         recognition.start();
-        document.getElementById('status').innerText = "මම අහගෙන ඉන්නේ...👂";
+        document.getElementById('status').innerText = "මම අහගෙන ඉන්නේ... 👂";
     }
 
     if(recognition) {
@@ -73,35 +66,34 @@
         };
     }
 
-    function askCat() {
+    async function askCat() {
         let input = document.getElementById('user-input').value.trim();
         let status = document.getElementById('status');
-        let responseText = "";
-
         if (!input) return;
-        status.innerText = "ම්ම්ම්... 🤔";
 
-        // Logic
-        if (input.toLowerCase().includes("hi") || input.includes("හලෝ")) {
-            responseText = "හලෝ බොස්! මම ඔයාගේ ඔරිජිනල් AI පූසා. සැපද?";
-        } else if (input.includes("වෙලාව")) {
-            responseText = "දැන් වෙලාව " + new Date().toLocaleTimeString();
-        } else if (input.includes("youtube.com")) {
-            responseText = "ඔය YouTube එකේ Cover එක මම හොයලා දෙන්නම්!";
-        } else {
-            responseText = "මියා‍ව්! මට ඒක තේරුණා. " + input + " ගැන නේද ඔයා කියන්නේ?";
+        status.innerText = "ම්ම්ම්... මම ඉන්ටර්නෙට් එකේ බලනවා... 🤔";
+
+        try {
+            // Wikipedia හරහා තොරතුරු සෙවීම
+            let res = await fetch(`https://en.wikipedia.org/api/rest_v1/page/summary/${input}`);
+            let data = await res.json();
+
+            if (data.extract) {
+                status.innerText = data.extract;
+                speak(data.extract);
+            } else {
+                status.innerText = "මියා‍ව්! මට ඒ ගැන තාම ලොකු විස්තරයක් නෑ මචං.";
+                speak("මියා‍ව්! මට ඒ ගැන තාම ලොකු විස්තරයක් නෑ මචං.");
+            }
+        } catch (e) {
+            status.innerText = "සර්වර් එකේ පොඩි අවුලක්!";
         }
-
-        setTimeout(() => {
-            status.innerText = responseText;
-            speak(responseText);
-        }, 500);
     }
 
     function speak(text) {
         let msg = new SpeechSynthesisUtterance();
         msg.text = text;
-        msg.lang = 'si-LK'; 
+        msg.lang = 'en-US'; 
         window.speechSynthesis.speak(msg);
     }
 </script>
