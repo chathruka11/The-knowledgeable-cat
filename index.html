@@ -3,130 +3,85 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI My Cat - Pro Edition</title>
+    <title>SMART AI CAT - Pro</title>
     <style>
-        body { 
-            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            height: 100vh; margin: 0; display: flex; align-items: center; justify-content: center; color: white;
-        }
-        .container {
-            background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(15px); width: 90%; max-width: 400px; padding: 30px;
-            border-radius: 40px; border: 1px solid rgba(255,255,255,0.2); text-align: center; box-shadow: 0 25px 50px rgba(0,0,0,0.5);
-        }
-        .cat-box img {
-            width: 170px; height: 170px; border-radius: 50%; border: 5px solid #00f2fe; object-fit: cover;
-            animation: pulse 2s infinite;
-        }
-        @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(0, 242, 254, 0.7); } 70% { box-shadow: 0 0 0 15px rgba(0, 242, 254, 0); } 100% { box-shadow: 0 0 0 0 rgba(0, 242, 254, 0); } }
-        #status { margin: 20px 0; font-size: 17px; font-weight: 500; min-height: 100px; max-height: 160px; overflow-y: auto; color: #00f2fe; }
-        input { 
-            width: 85%; padding: 15px; border-radius: 20px; border: none; font-size: 16px; margin-bottom: 10px; outline: none; background: rgba(255,255,255,0.9); color: #333;
-        }
-        button {
-            padding: 15px; border: none; border-radius: 20px; font-weight: bold; font-size: 16px; cursor: pointer; transition: 0.3s; width: 100%; margin-bottom: 10px;
-        }
+        body { background: #121212; font-family: 'Segoe UI', sans-serif; height: 100vh; margin: 0; display: flex; align-items: center; justify-content: center; color: white; }
+        .container { background: #1e1e1e; width: 90%; max-width: 400px; padding: 30px; border-radius: 40px; border: 2px solid #00f2fe; text-align: center; box-shadow: 0 0 20px #00f2fe; }
+        /* පින්තූරේ ලස්සනට පේන්න මෙතන වෙනස් කළා */
+        .cat-box img { width: 150px; height: 150px; border-radius: 50%; border: 4px solid #00f2fe; background: #000; object-fit: contain; }
+        #status { margin: 20px 0; font-size: 16px; min-height: 80px; color: #00f2fe; line-height: 1.4; }
+        input { width: 85%; padding: 15px; border-radius: 20px; border: none; margin-bottom: 10px; background: #333; color: white; outline: none; }
+        button { width: 100%; padding: 15px; border-radius: 20px; border: none; font-weight: bold; cursor: pointer; margin-bottom: 10px; font-size: 16px; }
         .btn-ask { background: #00f2fe; color: #000; }
         .btn-voice { background: #ff758c; color: white; }
-        .btn-ask:hover, .btn-voice:hover { transform: scale(1.02); opacity: 0.9; }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <h2 style="letter-spacing: 2px; color: #00f2fe;">SMART AI CAT 🐾</h2>
+    <h2 style="color: #00f2fe; letter-spacing: 2px;">SMART AI CAT 🐾</h2>
     <div class="cat-box">
-        <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHp1eHRndmt3Z3o1eHByazR6eXFid3R5eHh5eHh5eHh5eHh5eCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/MDJ9IbM3vUzUtHyBnL/giphy.gif" alt="AI Cat">
+        <img src="https://img.icons8.com/bubbles/200/000000/cat.png" alt="Smart Cat">
     </div>
-
-    <div id="status">මම දැන් ලෑස්තියි Boss! ඕනෑම දෙයක් ඉංග්‍රීසියෙන් අහන්න...</div>
-
-    <input type="text" id="userInput" placeholder="Ask time, date or anything...">
-    
-    <button class="btn-ask" onclick="askCat()">පූසාගෙන් අහන්න</button>
+    <div id="status">Hello Boss Chathruka! I'm ready to chat.</div>
+    <input type="text" id="userInput" placeholder="I'm bored..." onkeypress="if(event.key === 'Enter') askCat()">
+    <button class="btn-ask" onclick="askCat()">ප්‍රසංගෙන් අහන්න</button>
     <button class="btn-voice" onclick="startVoice()">🎤 Voice Live</button>
 </div>
 
 <script>
-    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-    const recognition = (SpeechRecognition) ? new SpeechRecognition() : null;
-
-    function startVoice() {
-        if(!recognition) return;
-        recognition.start();
-        document.getElementById('status').innerText = "මම අහගෙන ඉන්නේ Boss... 👂";
-    }
-
-    if(recognition) {
-        recognition.onresult = function(event) {
-            document.getElementById('userInput').value = event.results[0][0].transcript;
-            askCat();
-        };
-    }
-
     async function askCat() {
-        let input = document.getElementById('userInput').value.trim();
-        let status = document.getElementById('status');
-        if (!input) return;
+        const input = document.getElementById('userInput').value.trim();
+        const status = document.getElementById('status');
+        if(!input) return;
 
-        status.innerText = "Thinking... 🧠🐾";
+        status.innerText = "Thinking... 🐈";
+        let lowInput = input.toLowerCase();
+        let response = "";
 
-        let lowerInput = input.toLowerCase();
-        let responseText = "";
-
-        // 1. වෙලාව සහ දිනය (Local Logic)
-        if (lowerInput.includes("time")) {
-            let time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-            responseText = "The time is exactly " + time + ", Boss! Time is precious.";
+        // 🧠 Friendly AI Brain - අපි පූසාව පණ ගන්වමු
+        if(lowInput.includes("bored")) {
+            response = "Oh no! If you're bored, let's talk about something fun! Do you want me to tell you a cat joke or some space facts?";
         } 
-        else if (lowerInput.includes("date") || lowerInput.includes("today")) {
-            let date = new Date().toDateString();
-            responseText = "Today is " + date + ". Let's make it a productive day!";
+        else if(lowInput.includes("time")) {
+            response = "The time is " + new Date().toLocaleTimeString() + ", Boss! Make every second count.";
         }
-        // 2. මිත්‍රශීලී කතාව (Friendly Chat)
-        else if (lowerInput.includes("hi") || lowerInput.includes("hello")) {
-            responseText = "Hello my dear friend! I am your smart AI cat. How can I help you today?";
+        else if(lowInput.includes("hi") || lowInput.includes("hello")) {
+            response = "Hey there! I was just taking a nap. What's on your mind?";
         }
-        else if (lowerInput.includes("how are you")) {
-            responseText = "I'm feeling purr-fectly fine! Just waiting for your brilliant questions.";
-        }
-        // 3. සජීවී සහ සාමාන්‍ය දැනුම සෙවීම (Live Search)
         else {
             try {
+                // සර්ච් එකකට යන්න කලින් පූසා යාළුවෙක් වගේ උත්තරයක් දෙනවා
                 const res = await fetch(`https://api.duckduckgo.com/?q=${encodeURIComponent(input)}&format=json&no_html=1`);
                 const data = await res.json();
-                
-                if (data.AbstractText) {
-                    responseText = data.AbstractText;
-                } else if (data.RelatedTopics && data.RelatedTopics.length > 0) {
-                    responseText = data.RelatedTopics[0].Text;
-                } else {
-                    responseText = "That's a very interesting question! While I'm still learning about " + input + ", I'll try to find more details for you soon.";
-                }
-            } catch (e) {
-                responseText = "Sorry Boss, I'm having trouble connecting to the internet.";
+                response = data.AbstractText || "That's interesting! Tell me more about that, I'm listening.";
+            } catch(e) {
+                response = "My brain is a bit fuzzy right now, can you say that again?";
             }
         }
 
-        status.innerText = responseText;
-        speak(responseText);
+        status.innerText = response;
+        speak(response);
+        document.getElementById('userInput').value = "";
     }
 
     function speak(text) {
-        window.speechSynthesis.cancel(); 
-        let utterance = new SpeechSynthesisUtterance(text);
-        let voices = window.speechSynthesis.getVoices();
-        
-        // මනුස්ස හඬට සමාන වොයිස් එකක් සෙවීම
-        utterance.voice = voices.find(v => v.name.includes('Natural')) || voices.find(v => v.lang.includes('en-US')) || voices[0];
-        
-        utterance.pitch = 1.3; // හුරතල් පූසාගේ කටහඬ
-        utterance.rate = 0.95; // සන්සුන් කතා විලාසය
-        window.speechSynthesis.speak(utterance);
+        window.speechSynthesis.cancel();
+        const msg = new SpeechSynthesisUtterance(text);
+        msg.pitch = 1.3;
+        msg.rate = 1.0;
+        window.speechSynthesis.speak(msg);
     }
 
-    window.speechSynthesis.onvoiceschanged = () => window.speechSynthesis.getVoices();
+    function startVoice() {
+        const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+        recognition.lang = 'en-US';
+        recognition.start();
+        recognition.onresult = (e) => {
+            document.getElementById('userInput').value = e.results[0][0].transcript;
+            askCat();
+        };
+    }
 </script>
-
 </body>
 </html>
