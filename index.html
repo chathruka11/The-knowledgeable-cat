@@ -3,51 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI My Cat - Pro Edition</title>
+    <title>AI My Cat - God Mode</title>
     <style>
         body { 
-            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            height: 100vh; margin: 0; display: flex; align-items: center; justify-content: center;
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            font-family: 'Segoe UI', sans-serif; height: 100vh; margin: 0; display: flex; align-items: center; justify-content: center; color: white;
         }
         .app-card {
-            background: white; width: 90%; max-width: 380px; padding: 25px;
-            border-radius: 40px; box-shadow: 0 15px 35px rgba(0,0,0,0.2); text-align: center;
+            background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(15px); width: 90%; max-width: 400px; padding: 30px;
+            border-radius: 40px; border: 1px solid rgba(255,255,255,0.2); text-align: center; box-shadow: 0 25px 50px rgba(0,0,0,0.5);
         }
         .cat-box img {
-            width: 150px; height: 150px; border-radius: 50%; border: 5px solid #ff758c; object-fit: cover;
+            width: 170px; height: 170px; border-radius: 50%; border: 5px solid #00f2fe; object-fit: cover; animation: pulse 2s infinite;
         }
-        .status-text { margin: 15px 0; font-size: 17px; font-weight: bold; color: #333; min-height: 60px; overflow-y: auto; max-height: 150px; }
+        @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(0, 242, 254, 0.7); } 70% { box-shadow: 0 0 0 20px rgba(0, 242, 254, 0); } 100% { box-shadow: 0 0 0 0 rgba(0, 242, 254, 0); } }
+        .status-text { margin: 20px 0; font-size: 17px; font-weight: 500; min-height: 100px; max-height: 160px; overflow-y: auto; text-shadow: 1px 1px 2px black; }
         input { 
-            width: 85%; padding: 15px; border-radius: 20px; border: 2px solid #ddd; font-size: 16px; margin-bottom: 10px; outline: none;
+            width: 85%; padding: 15px; border-radius: 20px; border: none; font-size: 16px; margin-bottom: 10px; outline: none; background: rgba(255,255,255,0.9); color: #333;
         }
         button {
             padding: 15px; border: none; border-radius: 20px; font-weight: bold; font-size: 16px; cursor: pointer; transition: 0.3s; width: 100%; margin-bottom: 10px;
         }
-        .btn-ask { background: #667eea; color: white; }
+        .btn-ask { background: #00f2fe; color: #000; }
         .btn-mic { background: #ff758c; color: white; }
     </style>
 </head>
 <body>
 
 <div class="app-card">
-    <h2>AI My Cat 🐾</h2>
+    <h2 style="letter-spacing: 2px;">SMART AI CAT 🐾</h2>
     <div class="cat-box">
-        <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHp1eHRndmt3Z3o1eHByazR6eXFid3R5eHh5eHh5eHh5eHh5eCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/MDJ9IbM3vUzUtHyBnL/giphy.gif" alt="Animated Cat">
+        <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHp1eHRndmt3Z3o1eHByazR6eXFid3R5eHh5eHh5eHh5eHh5eCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/MDJ9IbM3vUzUtHyBnL/giphy.gif" alt="Thinking Cat">
     </div>
 
-    <div id="status" class="status-text">මියා‍ව්! මම දැන් ලෑස්තියි... ඕනෑම දෙයක් අහන්න මචං!</div>
+    <div id="status" class="status-text">මම දැන් ලෝකයේ ඕනෑම සජීවී දෙයක් ගැන දන්නවා මචං! ඕනෑම දෙයක් අහන්න...</div>
 
-    <input type="text" id="user-input" placeholder="Ask anything in English...">
+    <input type="text" id="user-input" placeholder="Ask live scores, news or anything...">
     
-    <button class="btn-ask" onclick="askCat()">පූසාට කියන්න</button>
-    <button class="btn-mic" onclick="startVoice()">🎤 Voice</button>
+    <button class="btn-ask" onclick="askCat()">පූසාගෙන් අහන්න</button>
+    <button class="btn-mic" onclick="startVoice()">🎤 Voice Live</button>
 </div>
 
 <script>
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
     const recognition = (SpeechRecognition) ? new SpeechRecognition() : null;
-    if(recognition) recognition.lang = 'en-US';
 
     function startVoice() {
         if(!recognition) return;
@@ -67,73 +66,45 @@
         let status = document.getElementById('status');
         if (!input) return;
 
-        // YouTube Logic - මම මේකත් ඇඩ් කළා
-        if(input.includes("youtube.com") || input.includes("youtu.be")) {
-            status.innerText = "මම මේ වීඩියෝ එක ගැන බලනවා...";
-            let videoId = input.split('v=')[1] || input.split('/').pop();
-            status.innerHTML = `<img src="https://img.youtube.com/vi/${videoId}/0.jpg" style="width:100%; border-radius:10px;"><br>මෙන්න වීඩියෝ එකේ පින්තූරේ!`;
-            speak("Here is the YouTube video thumbnail, boss!");
-            return;
-        }
-
-        status.innerText = "ම්ම්ම්... මම හිතනවා... 🤔";
+        status.innerText = "ම්ම්ම්... මම ඉන්ටර්නෙට් එකේ බලනවා... 🌐";
 
         try {
-            // Wikipedia සෙවීම
-            let res = await fetch(`https://en.wikipedia.org/api/rest_v1/page/summary/${input}`);
+            // Live Search Logic: DuckDuckGo API හරහා සජීවී තොරතුරු ඇදීම
+            // සටහන: සජීවී ලකුණු සඳහා අපි DuckDuckGo Instant Answer API එක පාවිච්චි කරමු
+            let res = await fetch(`https://api.duckduckgo.com/?q=${encodeURIComponent(input)}&format=json&no_html=1`);
             let data = await res.json();
 
-            let finalResponse = "";
+            let responseText = "";
 
-            if (data.extract) {
-                finalResponse = data.extract;
+            if (data.AbstractText) {
+                responseText = data.AbstractText;
+            } else if (data.Answer) {
+                responseText = data.Answer;
+            } else if (data.RelatedTopics && data.RelatedTopics.length > 0) {
+                responseText = data.RelatedTopics[0].Text;
             } else {
-                // Friendly Chat Logic
-                let lowerInput = input.toLowerCase();
-                if(lowerInput.includes("hi") || lowerInput.includes("hello")) {
-                    finalResponse = "Hello there! I'm your AI cat. I'm so happy to talk to you!";
-                } else if(lowerInput.includes("how are you")) {
-                    finalResponse = "I'm purr-fectly fine! Just waiting for your next question.";
-                } else if(lowerInput.includes("your name") || lowerInput.includes("who are you")) {
-                    finalResponse = "I am the Boss Chathruka's Special AI Cat! Nice to meet you.";
-                } else if(lowerInput.includes("joke")) {
-                    finalResponse = "Why don't cats play poker in the jungle? Too many cheetahs!";
-                } else {
-                    finalResponse = "I am not 100% sure about " + input + ", but I am learning every day!";
-                }
+                // සජීවී දේවල් නැත්නම් AI බුද්ධිය පාවිච්චි කිරීම
+                responseText = "I checked live sources for '" + input + "'. While I'm still processing deep live data, it seems to be an interesting topic! Ask me more specifically.";
             }
 
-            status.innerText = finalResponse;
-            speak(finalResponse);
+            status.innerText = responseText;
+            speak(responseText);
 
         } catch (e) {
-            status.innerText = "සර්වර් එකේ පොඩි අවුලක් මචං!";
+            status.innerText = "සජීවීව තොරතුරු ගන්න පොඩි අවුලක් මචං!";
         }
     }
 
-    // පූසාගේ අලුත් හඬ (Cute Voice)
     function speak(text) {
         window.speechSynthesis.cancel(); 
-        let msg = new SpeechSynthesisUtterance();
-        msg.text = text;
-        
+        let utterance = new SpeechSynthesisUtterance(text);
         let voices = window.speechSynthesis.getVoices();
-        if (voices.length > 0) {
-            // විවිධ බ්‍රවුසර් වල හොඳම හඬ තෝරාගැනීම
-            msg.voice = voices.find(v => v.lang.includes('en')) || voices[0];
-        }
-
-        msg.pitch = 1.4; //  හීනි කරලා හුරතල් ගතිය වැඩි කළා
-        msg.rate = 1.0;  // කතා කරන වේගය
-        msg.lang = 'en-US'; 
-
-        window.speechSynthesis.speak(msg);
+        // වඩාත් පැහැදිලි "Neural" වැනි හඬක් තේරීම
+        utterance.voice = voices.find(v => v.name.includes('Google')) || voices[0];
+        utterance.pitch = 1.3;
+        utterance.rate = 1.0;
+        window.speechSynthesis.speak(utterance);
     }
-
-    // හඬවල් load වෙන්න වෙලාවක් යන නිසා මේක අවශ්‍යයි
-    window.speechSynthesis.onvoiceschanged = function() {
-        window.speechSynthesis.getVoices();
-    };
 </script>
 
 </body>
