@@ -3,30 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI My Cat - Smart Edition</title>
+    <title>AI My Cat - Thinking Edition</title>
     <style>
         body { 
-            background: linear-gradient(135deg, #74ebd5 0%, #acb6e5 100%);
-            font-family: sans-serif; height: 100vh; margin: 0; 
-            display: flex; align-items: center; justify-content: center;
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            font-family: sans-serif; height: 100vh; margin: 0; display: flex; align-items: center; justify-content: center;
         }
         .app-card {
             background: white; width: 90%; max-width: 380px; padding: 25px;
-            border-radius: 40px; box-shadow: 0 15px 35px rgba(0,0,0,0.2);
-            text-align: center;
+            border-radius: 40px; box-shadow: 0 15px 35px rgba(0,0,0,0.2); text-align: center;
         }
         .cat-box img {
-            width: 150px; height: 150px; border-radius: 50%;
-            border: 5px solid #667eea; object-fit: cover;
+            width: 150px; height: 150px; border-radius: 50%; border: 5px solid #ff758c; object-fit: cover;
         }
-        .status-text { margin: 15px 0; font-size: 17px; font-weight: bold; color: #333; min-height: 50px; }
+        .status-text { margin: 15px 0; font-size: 17px; font-weight: bold; color: #333; min-height: 60px; overflow-y: auto; max-height: 150px; }
         input { 
-            width: 85%; padding: 15px; border-radius: 20px; border: 2px solid #ddd;
-            font-size: 16px; margin-bottom: 10px; outline: none;
+            width: 85%; padding: 15px; border-radius: 20px; border: 2px solid #ddd; font-size: 16px; margin-bottom: 10px; outline: none;
         }
         button {
-            padding: 15px; border: none; border-radius: 20px; font-weight: bold;
-            font-size: 16px; cursor: pointer; transition: 0.3s; width: 100%; margin-bottom: 10px;
+            padding: 15px; border: none; border-radius: 20px; font-weight: bold; font-size: 16px; cursor: pointer; transition: 0.3s; width: 100%; margin-bottom: 10px;
         }
         .btn-ask { background: #667eea; color: white; }
         .btn-mic { background: #ff758c; color: white; }
@@ -37,12 +32,12 @@
 <div class="app-card">
     <h2>AI My Cat 🐾</h2>
     <div class="cat-box">
-        <img src="https://placekitten.com/300/300" alt="AI Cat">
+        <img src="https://i.pinimg.com/originals/0c/64/00/0c64006e864be7c1b5a5965a3637e193.gif" alt="Animated Cat">
     </div>
 
-    <div id="status" class="status-text">මියා‍ව්! ඕනෑම දෙයක් අහන්න මචං...</div>
+    <div id="status" class="status-text">මියා‍ව්! මම දැන් ඕනෑම දෙයකට උත්තර දෙන්න ලෑස්තියි...</div>
 
-    <input type="text" id="user-input" placeholder="ප්‍රශ්නයක් ටයිප් කරන්න...">
+    <input type="text" id="user-input" placeholder="Say Hi or Ask anything...">
     
     <button class="btn-ask" onclick="askCat()">පූසාට කියන්න</button>
     <button class="btn-mic" onclick="startVoice()">🎤 Voice</button>
@@ -51,7 +46,7 @@
 <script>
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
     const recognition = (SpeechRecognition) ? new SpeechRecognition() : null;
-    if(recognition) recognition.lang = 'en-US'; // Voice support
+    if(recognition) recognition.lang = 'en-US';
 
     function startVoice() {
         if(!recognition) return;
@@ -71,26 +66,42 @@
         let status = document.getElementById('status');
         if (!input) return;
 
-        status.innerText = "ම්ම්ම්... මම ඉන්ටර්නෙට් එකේ බලනවා... 🤔";
+        status.innerText = "ම්ම්ම්... මම හිතනවා... 🤔";
 
+        // AI Logic: සරලව හිතලා උත්තර දෙන ක්‍රමය
         try {
-            // Wikipedia හරහා තොරතුරු සෙවීම
+            // අපි මුලින්ම Wikipedia එකේ බලනවා, ඒකේ නැත්නම් සාමාන්‍ය Chat එකක් කරනවා
             let res = await fetch(`https://en.wikipedia.org/api/rest_v1/page/summary/${input}`);
             let data = await res.json();
 
+            let finalResponse = "";
+
             if (data.extract) {
-                status.innerText = data.extract;
-                speak(data.extract);
+                finalResponse = data.extract;
             } else {
-                status.innerText = "මියා‍ව්! මට ඒ ගැන තාම ලොකු විස්තරයක් නෑ මචං.";
-                speak("මියා‍ව්! මට ඒ ගැන තාම ලොකු විස්තරයක් නෑ මචං.");
+                // Greeting logic - මෙතනින් තමයි පූසා "හිතලා" උත්තර දෙන්නේ
+                let lowerInput = input.toLowerCase();
+                if(lowerInput.includes("hi") || lowerInput.includes("hello")) {
+                    finalResponse = "Hello there! I'm your AI cat. How can I help you today?";
+                } else if(lowerInput.includes("how are you")) {
+                    finalResponse = "I'm purr-fect! Just chilling in your code. What about you?";
+                } else if(lowerInput.includes("your name")) {
+                    finalResponse = "I am the Boss Chathruka's Special AI Cat!";
+                } else {
+                    finalResponse = "That's an interesting point! I'm learning more about " + input + " every day.";
+                }
             }
+
+            status.innerText = finalResponse;
+            speak(finalResponse);
+
         } catch (e) {
-            status.innerText = "සර්වර් එකේ පොඩි අවුලක්!";
+            status.innerText = "සර්වර් එකේ පොඩි අවුලක් මචං!";
         }
     }
 
     function speak(text) {
+        window.speechSynthesis.cancel(); // කලින් කියවන එක නවත්තන්න
         let msg = new SpeechSynthesisUtterance();
         msg.text = text;
         msg.lang = 'en-US'; 
