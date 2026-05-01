@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="si">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Talking AI Cat</title>
+    <style>
+        body { background-color: #1a1a1a; color: white; text-align: center; font-family: sans-serif; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; margin: 0; }
+        .cat-btn { font-size: 150px; background: none; border: none; cursor: pointer; transition: transform 0.2s; }
+        .cat-btn:active { transform: scale(0.9); }
+        h1 { font-size: 24px; margin-top: 20px; }
+        #status { color: #4caf50; margin-top: 10px; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+    <button class="cat-btn" id="speakBtn" onclick="askCat()" aria-label="පූසා සමඟ කතා කිරීමට මෙතන ඔබන්න">🐱</button>
+    
+    <h1 id="display">කතා කරන පූසා</h1>
+    <p id="status">සූදානම්...</p>
+
+    <script>
+        // පූසා කතා කරන ශ්‍රිතය (Text to Speech)
+        function catSay(text) {
+            var msg = new SpeechSynthesisUtterance();
+            msg.text = text;
+            msg.lang = 'si-LK'; // සිංහල භාෂාව
+            window.speechSynthesis.speak(msg);
+            document.getElementById('display').innerText = text;
+        }
+
+        function askCat() {
+            catSay("ඔව් චතෘක, මම ඔයාට කොහොමද උදව් කරන්නෙ?");
+            
+            // මීළඟට මෙතනට Gemini AI API එක සම්බන්ධ කරනවා
+            // දැනට උදාහරණයක් ලෙස:
+            setTimeout(() => {
+                document.getElementById('status').innerText = "ඔබට ඇහුම්කන් දෙමින්...";
+            }, 2000);
+        }
+    </script>
+</body>
+</html>
