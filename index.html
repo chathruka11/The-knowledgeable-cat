@@ -3,11 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI My Cat - Thinking Edition</title>
+    <title>AI My Cat - Pro Edition</title>
     <style>
         body { 
             background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
-            font-family: sans-serif; height: 100vh; margin: 0; display: flex; align-items: center; justify-content: center;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            height: 100vh; margin: 0; display: flex; align-items: center; justify-content: center;
         }
         .app-card {
             background: white; width: 90%; max-width: 380px; padding: 25px;
@@ -32,12 +33,12 @@
 <div class="app-card">
     <h2>AI My Cat 🐾</h2>
     <div class="cat-box">
-        <img src="https://i.pinimg.com/originals/0c/64/00/0c64006e864be7c1b5a5965a3637e193.gif" alt="Animated Cat">
+        <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHp1eHRndmt3Z3o1eHByazR6eXFid3R5eHh5eHh5eHh5eHh5eCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/MDJ9IbM3vUzUtHyBnL/giphy.gif" alt="Animated Cat">
     </div>
 
-    <div id="status" class="status-text">මියා‍ව්! මම දැන් ඕනෑම දෙයකට උත්තර දෙන්න ලෑස්තියි...</div>
+    <div id="status" class="status-text">මියා‍ව්! මම දැන් ලෑස්තියි... ඕනෑම දෙයක් අහන්න මචං!</div>
 
-    <input type="text" id="user-input" placeholder="Say Hi or Ask anything...">
+    <input type="text" id="user-input" placeholder="Ask anything in English...">
     
     <button class="btn-ask" onclick="askCat()">පූසාට කියන්න</button>
     <button class="btn-mic" onclick="startVoice()">🎤 Voice</button>
@@ -66,11 +67,19 @@
         let status = document.getElementById('status');
         if (!input) return;
 
+        // YouTube Logic - මම මේකත් ඇඩ් කළා
+        if(input.includes("youtube.com") || input.includes("youtu.be")) {
+            status.innerText = "මම මේ වීඩියෝ එක ගැන බලනවා...";
+            let videoId = input.split('v=')[1] || input.split('/').pop();
+            status.innerHTML = `<img src="https://img.youtube.com/vi/${videoId}/0.jpg" style="width:100%; border-radius:10px;"><br>මෙන්න වීඩියෝ එකේ පින්තූරේ!`;
+            speak("Here is the YouTube video thumbnail, boss!");
+            return;
+        }
+
         status.innerText = "ම්ම්ම්... මම හිතනවා... 🤔";
 
-        // AI Logic: සරලව හිතලා උත්තර දෙන ක්‍රමය
         try {
-            // අපි මුලින්ම Wikipedia එකේ බලනවා, ඒකේ නැත්නම් සාමාන්‍ය Chat එකක් කරනවා
+            // Wikipedia සෙවීම
             let res = await fetch(`https://en.wikipedia.org/api/rest_v1/page/summary/${input}`);
             let data = await res.json();
 
@@ -79,16 +88,18 @@
             if (data.extract) {
                 finalResponse = data.extract;
             } else {
-                // Greeting logic - මෙතනින් තමයි පූසා "හිතලා" උත්තර දෙන්නේ
+                // Friendly Chat Logic
                 let lowerInput = input.toLowerCase();
                 if(lowerInput.includes("hi") || lowerInput.includes("hello")) {
-                    finalResponse = "Hello there! I'm your AI cat. How can I help you today?";
+                    finalResponse = "Hello there! I'm your AI cat. I'm so happy to talk to you!";
                 } else if(lowerInput.includes("how are you")) {
-                    finalResponse = "I'm purr-fect! Just chilling in your code. What about you?";
-                } else if(lowerInput.includes("your name")) {
-                    finalResponse = "I am the Boss Chathruka's Special AI Cat!";
+                    finalResponse = "I'm purr-fectly fine! Just waiting for your next question.";
+                } else if(lowerInput.includes("your name") || lowerInput.includes("who are you")) {
+                    finalResponse = "I am the Boss Chathruka's Special AI Cat! Nice to meet you.";
+                } else if(lowerInput.includes("joke")) {
+                    finalResponse = "Why don't cats play poker in the jungle? Too many cheetahs!";
                 } else {
-                    finalResponse = "That's an interesting point! I'm learning more about " + input + " every day.";
+                    finalResponse = "I am not 100% sure about " + input + ", but I am learning every day!";
                 }
             }
 
@@ -100,13 +111,29 @@
         }
     }
 
+    // පූසාගේ අලුත් හඬ (Cute Voice)
     function speak(text) {
-        window.speechSynthesis.cancel(); // කලින් කියවන එක නවත්තන්න
+        window.speechSynthesis.cancel(); 
         let msg = new SpeechSynthesisUtterance();
         msg.text = text;
+        
+        let voices = window.speechSynthesis.getVoices();
+        if (voices.length > 0) {
+            // විවිධ බ්‍රවුසර් වල හොඳම හඬ තෝරාගැනීම
+            msg.voice = voices.find(v => v.lang.includes('en')) || voices[0];
+        }
+
+        msg.pitch = 1.4; //  හීනි කරලා හුරතල් ගතිය වැඩි කළා
+        msg.rate = 1.0;  // කතා කරන වේගය
         msg.lang = 'en-US'; 
+
         window.speechSynthesis.speak(msg);
     }
+
+    // හඬවල් load වෙන්න වෙලාවක් යන නිසා මේක අවශ්‍යයි
+    window.speechSynthesis.onvoiceschanged = function() {
+        window.speechSynthesis.getVoices();
+    };
 </script>
 
 </body>
