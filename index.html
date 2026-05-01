@@ -3,55 +3,77 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Talking AI Cat</title>
+    <title>AI Talking Cat - Boss Chathruka</title>
     <style>
-        body { font-family: sans-serif; text-align: center; background-color: #f0f0f0; padding: 20px; }
-        .cat-container { background: white; padding: 20px; border-radius: 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
-        img { width: 200px; border-radius: 50%; }
-        input { padding: 10px; width: 80%; border-radius: 10px; border: 1px solid #ccc; margin: 10px 0; }
-        button { padding: 10px 20px; background: #4CAF50; color: white; border: none; border-radius: 10px; cursor: pointer; }
-        #response { margin-top: 20px; font-weight: bold; color: #333; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; text-align: center; background-color: #eef2f3; padding: 20px; }
+        .cat-container { background: white; padding: 30px; border-radius: 30px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); max-width: 400px; margin: auto; }
+        img { width: 150px; height: 150px; border-radius: 50%; border: 5px solid #4CAF50; object-fit: cover; }
+        input { padding: 12px; width: 90%; border-radius: 15px; border: 2px solid #ddd; margin: 15px 0; outline: none; }
+        button { padding: 12px 25px; background: #4CAF50; color: white; border: none; border-radius: 15px; cursor: pointer; font-weight: bold; width: 100%; transition: 0.3s; }
+        button:hover { background: #45a049; }
+        #response { margin-top: 20px; font-size: 18px; color: #333; min-height: 50px; font-weight: 500; }
+        .thumb-box { margin-top: 15px; display: none; }
+        .thumb-box img { width: 100%; border-radius: 10px; height: auto; border: none; }
     </style>
 </head>
 <body>
 
 <div class="cat-container">
-    <h1>Talking AI Cat 🐾</h1>
-    <img src="https://placekitten.com/200/200" alt="AI Cat">
+    <h2 style="color: #333;">Talking AI Cat 🐾</h2>
+    <img src="https://cdn.pixabay.com/photo/2017/02/20/18/03/cat-2083492_1280.jpg" alt="AI Cat">
     
-    <div id="response">මියා‍ව්! මොනවද මචං දැනගන්න ඕනේ?</div>
+    <div id="response">මියා‍ව්! මම දැන් ලෑස්තියි. ඕනෑම දෙයක් අහන්න මචං!</div>
     
-    <input type="text" id="user-input" placeholder="මෙතන ටයිප් කරන්න...">
-    <br>
+    <input type="text" id="user-input" placeholder="ප්‍රශ්නයක් හෝ YouTube ලින්ක් එකක්...">
     <button onclick="askCat()">පූසාගෙන් අහන්න</button>
+
+    <div id="thumb-display" class="thumb-box">
+        <p>මෙන්න YouTube Cover එක:</p>
+        <img id="yt-thumb" src="" alt="Thumbnail">
+    </div>
 </div>
 
 <script>
     async function askCat() {
-        let input = document.getElementById('user-input').value;
+        let input = document.getElementById('user-input').value.trim();
         let responseBox = document.getElementById('response');
+        let thumbBox = document.getElementById('thumb-display');
+        let ytImg = document.getElementById('yt-thumb');
         let responseText = "";
 
         if (!input) return;
+        responseBox.innerText = "කල්පනා කරනවා... 🐾";
+        thumbBox.style.display = "none";
 
-        // 1. සරල ගණන් හැදීම
-        if (/[0-9]/.test(input) && (input.includes('+') || input.includes('-') || input.includes('*') || input.includes('/'))) {
+        // 1. YouTube Thumbnail Finder (YouTube Cover එක ගැනීම)
+        if (input.includes("youtube.com") || input.includes("youtu.be")) {
+            let videoId = "";
+            if(input.includes("v=")) { videoId = input.split('v=')[1].split('&')[0]; }
+            else { videoId = input.split('/').pop(); }
+            
+            responseText = "මියා‍ව්! මම ඔයාට ඒ වීඩියෝ එකේ Cover එක හොයාගත්තා. බලන්න ලස්සනද කියලා!";
+            ytImg.src = `https://img.youtube.com/vi/${videoId}/maxresdefault.jpg`;
+            thumbBox.style.display = "block";
+        }
+        // 2. ගණන් හැදීම
+        else if (/[0-9]/.test(input) && (input.includes('+') || input.includes('-') || input.includes('*') || input.includes('/'))) {
             try { responseText = "ඕක සුළු වැඩක්නේ, උත්තරේ " + eval(input); } catch(e) { responseText = "ගණන් පැටලුනා බං!"; }
         }
-        // 2. වෙලාව ඇසීම
-        else if (input.includes("වෙලාව") || input.includes("time")) {
-            responseText = "දැන් වෙලාව " + new Date().toLocaleTimeString();
+        // 3. බුද්ධිමත් පිළිතුරු (Logic)
+        else if (input.toLowerCase().includes("hello") || input.includes("හලෝ")) {
+            responseText = "මියා‍ව්! හලෝ මචං, කොහොමද? මම චතුරූකගේ AI පූසා!";
         }
-        // 3. සාමාන්‍ය කතාබහ
-        else if (input.includes("හලෝ") || input.includes("hello")) {
-            responseText = "මියා‍ව්! හලෝ මචං, මම ඉන්නවා. අද මොකද කරන්නේ?";
+        else if (input.includes("කවුද") || input.includes("මොකක්ද")) {
+            responseText = "මම ඔයාට ඕනෑම දෙයක් ඉගෙන ගන්න උදව් කරන බුද්ධිමත් පූසෙක්!";
         }
         else {
-            responseText = "මියා‍ව්! මම ඒ ගැන හොයලා බලන්නම්. ඔයා අහන්නේ " + input + " ගැන නේද?";
+            responseText = "මියා‍ව්! මම ඒ ගැන තව ඉගෙන ගන්නවා. ඔයා ඇහුවේ " + input + " ගැන නේද? මම ඒක ඉක්මනටම කියලා දෙන්නම්!";
         }
 
-        responseBox.innerText = responseText;
-        speak(responseText);
+        setTimeout(() => {
+            responseBox.innerText = responseText;
+            speak(responseText);
+        }, 600);
     }
 
     function speak(text) {
