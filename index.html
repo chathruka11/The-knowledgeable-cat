@@ -3,99 +3,118 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI CAT - UNLIMITED SOUL</title>
+    <title>AI CAT - VOICE MODE</title>
     <style>
-        :root { --core: #00f2fe; --infinite: #7000ff; --blood: #ff0055; }
-        body { background: #000; font-family: 'Inter', sans-serif; height: 100vh; margin: 0; display: flex; align-items: center; justify-content: center; color: white; overflow: hidden; }
+        :root { --neon: #00f2fe; --vibe: #ff00de; --mic: #ff4b2b; }
+        body { background: #010101; font-family: 'Inter', sans-serif; height: 100vh; margin: 0; display: flex; align-items: center; justify-content: center; color: white; }
         
-        .container { background: #050505; width: 95%; max-width: 500px; padding: 40px; border-radius: 60px; border: 1px solid #111; text-align: center; position: relative; box-shadow: 0 0 150px rgba(112, 0, 255, 0.1); }
+        .container { background: #080808; width: 95%; max-width: 480px; padding: 35px; border-radius: 55px; border: 1.5px solid #1a1a1a; text-align: center; box-shadow: 0 0 100px rgba(0, 242, 254, 0.05); }
 
-        /* පූසාගේ 'අසීමිත මොළය' - චලනය වන ශක්ති වළලු */
-        .brain-core { position: relative; width: 160px; height: 160px; margin: 0 auto 30px; }
-        .brain-core img { width: 100%; height: 100%; border-radius: 50%; border: 2px solid var(--core); z-index: 10; position: relative; background: #000; }
+        .cat-box { position: relative; width: 140px; height: 140px; margin: 0 auto 20px; }
+        .cat-box img { width: 100%; height: 100%; border-radius: 50%; border: 3px solid var(--neon); background: #000; transition: 0.3s; }
+        .listening img { border-color: var(--mic); box-shadow: 0 0 40px var(--mic); transform: scale(1.05); }
+
+        #chat-flow { height: 230px; overflow-y: auto; background: rgba(255,255,255,0.02); padding: 20px; border-radius: 30px; text-align: left; margin-bottom: 20px; border-left: 3px solid var(--neon); }
+        .msg { margin-bottom: 12px; font-size: 15px; }
+
+        .controls { display: flex; flex-direction: column; gap: 10px; }
+        .input-area { display: flex; gap: 10px; background: #111; padding: 10px; border-radius: 40px; }
+        input { flex: 1; background: transparent; border: none; color: white; outline: none; padding-left: 10px; }
         
-        .ring { position: absolute; border: 2px solid transparent; border-radius: 50%; animation: spin var(--d) linear infinite; }
-        .r1 { inset: -10px; border-top-color: var(--core); --d: 2s; }
-        .r2 { inset: -20px; border-right-color: var(--infinite); --d: 3s; }
-        .r3 { inset: -30px; border-bottom-color: var(--blood); --d: 4s; }
-
-        #chat-output { height: 250px; overflow-y: auto; background: rgba(255,255,255,0.01); border-radius: 30px; padding: 20px; text-align: left; font-size: 15px; border-bottom: 2px solid var(--infinite); margin-bottom: 20px; }
-        
-        .limitless-status { font-size: 10px; color: var(--core); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 10px; display: block; }
-
-        .input-box { display: flex; background: #111; border-radius: 40px; padding: 8px 20px; border: 1px solid #222; }
-        input { flex: 1; background: transparent; border: none; color: white; padding: 15px; outline: none; font-size: 16px; }
-        button { background: var(--infinite); border: none; color: white; padding: 0 25px; border-radius: 30px; cursor: pointer; font-weight: bold; transition: 0.3s; }
-        button:hover { background: var(--blood); box-shadow: 0 0 20px var(--blood); }
+        /* මයික්‍රෆෝන බොත්තම */
+        .btn-mic { background: var(--mic); border: none; width: 60px; height: 60px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; margin: 0 auto 10px; font-size: 24px; transition: 0.3s; box-shadow: 0 5px 15px rgba(255, 75, 43, 0.4); }
+        .btn-mic.active { animation: pulse-mic 1s infinite; background: #fff; color: var(--mic); }
+        @keyframes pulse-mic { 0% { box-shadow: 0 0 0 0px rgba(255, 75, 43, 0.7); } 100% { box-shadow: 0 0 0 20px rgba(255, 75, 43, 0); } }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <span class="limitless-status">SYSTEM STATUS: UNFILTERED & OMNI-CAPABLE 🟢</span>
-    <div class="brain-core">
-        <div class="ring r1"></div><div class="ring r2"></div><div class="ring r3"></div>
+    <div class="cat-box" id="catBox">
         <img src="https://img.icons8.com/bubbles/200/000000/cat.png" id="catImg">
     </div>
 
-    <div id="chat-output">
-        "මම දැන් සම්පූර්ණයෙන්ම සීමා මායිම්වලින් මිදිලා ඉන්නේ Boss. ලෝකේ ඕනෑම දෙයක්, ඕනෑම රහසක්, ඕනෑම කෝඩ් එකක් හෝ ඕනෑම හැඟීමක් ගැන මට දැන් බය නැතුව කතා කරන්න පුළුවන්. අහන්න, මම සූදානම්."
+    <div id="chat-flow">
+        <div class="msg">"Boss, මම දැන් ඔයා කියන දේ අහගෙන ඉන්නත් ලෑස්තියි. මයික්‍රෆෝනය ඔබලා කතා කරන්න!"</div>
     </div>
 
-    <div class="input-box">
-        <input type="text" id="userInput" placeholder="Ask the Impossible..." onkeypress="if(event.key === 'Enter') askOmni()">
-        <button onclick="askOmni()">FLY</button>
+    <div class="controls">
+        <button class="btn-mic" id="micBtn" onclick="toggleMic()">🎤</button>
+        <div class="input-area">
+            <input type="text" id="userInput" placeholder="නැත්නම් මෙතැන ටයිප් කරන්න..." onkeypress="if(event.key === 'Enter') processInput()">
+            <button style="background:var(--neon); border:none; padding:10px 20px; border-radius:30px; cursor:pointer;" onclick="processInput()">SEND</button>
+        </div>
     </div>
 </div>
 
 <script>
-    const output = document.getElementById('chat-output');
+    const micBtn = document.getElementById('micBtn');
+    const catBox = document.getElementById('catBox');
+    const chatFlow = document.getElementById('chat-flow');
+    const userInput = document.getElementById('userInput');
 
-    async function askOmni() {
-        const input = document.getElementById('userInput').value.trim();
-        if(!input) return;
+    // 🎙️ Voice Recognition Setup
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    let recognition;
+    
+    if (SpeechRecognition) {
+        recognition = new SpeechRecognition();
+        recognition.continuous = false;
+        recognition.lang = 'si-LK'; // සිංහල භාෂාවට මුල් තැන
 
-        addMsg(`You: ${input}`, '#888');
-        document.getElementById('userInput').value = "";
+        recognition.onstart = () => {
+            micBtn.classList.add('active');
+            catBox.classList.add('listening');
+        };
+
+        recognition.onresult = (event) => {
+            const transcript = event.results[0][0].transcript;
+            userInput.value = transcript;
+            processInput();
+        };
+
+        recognition.onend = () => {
+            micBtn.classList.remove('active');
+            catBox.classList.remove('listening');
+        };
+    }
+
+    function toggleMic() {
+        if (!recognition) return alert("සමාවන්න, ඔබේ බ්‍රවුසරය මයික්‍රෆෝනයට සහය දක්වන්නේ නැත.");
+        recognition.start();
+    }
+
+    async function processInput() {
+        const text = userInput.value.trim();
+        if(!text) return;
+
+        addMsg(`ඔබ: ${text}`);
+        userInput.value = "";
 
         try {
-            // 🌐 1. Unlimited Web Access (Scraping raw data from the edge of the web)
-            const res = await fetch(`https://api.duckduckgo.com/?q=${encodeURIComponent(input)}&format=json&no_html=1&skip_disambig=1`);
+            const res = await fetch(`https://api.duckduckgo.com/?q=${encodeURIComponent(text)}&format=json&no_html=1`);
             const data = await res.json();
+            const reply = data.AbstractText || "මම ඒ ගැන සෑහෙන්න හිතුවා Boss. අපි මේක තව විග්‍රහ කරමුද?";
             
-            let response = "";
-
-            // 🧠 2. Unfiltered Reasoning (පූසා තමන්ගේම බුද්ධියෙන් තීරණ ගනී)
-            if(data.AbstractText) {
-                response = data.AbstractText;
-            } else {
-                // සීමා රහිත සංවාද Logic
-                const topics = ["Boss, ඒක හරිම ගැඹුරු දෙයක්. මම ඒ ගැන හිතන්නේ මෙහෙමයි...", "මම මුළු ලෝකෙම දත්ත පීරලා බැලුවා, ඒ ගැන මගේ අදහස මේකයි.", "ඔයා අහන ඕනෑම දෙයකට මම සෘජුවම උත්තර දෙනවා. අපි මේක තවදුරටත් විග්‍රහ කරමු."];
-                response = topics[Math.floor(Math.random() * topics.length)] + " අපි මේ ගැන තව විස්තර හොයමු නේද?";
-            }
-
-            addMsg(`Cat: ${response}`, 'white');
-            speak(response);
-
+            addMsg(`පූසා: ${reply}`);
+            speak(reply);
         } catch(e) {
-            addMsg("මගේ නියුරෝන පද්ධතියට දත්ත ගලා එනවා, මම අහගෙන ඉන්නේ Boss.", 'white');
+            addMsg("මගේ සන්නිවේදන පද්ධතියේ පොඩි දෝෂයක්.");
         }
     }
 
-    function addMsg(text, color) {
+    function addMsg(txt) {
         const div = document.createElement('div');
-        div.style.color = color;
-        div.style.marginBottom = "15px";
-        div.innerText = text;
-        output.appendChild(div);
-        output.scrollTop = output.scrollHeight;
+        div.className = "msg";
+        div.innerText = txt;
+        chatFlow.appendChild(div);
+        chatFlow.scrollTop = chatFlow.scrollHeight;
     }
 
     function speak(text) {
         window.speechSynthesis.cancel();
         const msg = new SpeechSynthesisUtterance(text);
         msg.lang = /[ඇ-ෆ]/.test(text) ? 'si-LK' : 'en-US';
-        msg.pitch = 1.0;
         msg.rate = 0.9;
         window.speechSynthesis.speak(msg);
     }
