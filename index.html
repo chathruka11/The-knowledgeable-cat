@@ -3,124 +3,108 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI CAT - OMNI GOD MODE</title>
+    <title>AI CAT - MASTER CORE</title>
     <style>
-        :root { --neon: #00f2fe; --vibe: #ff00de; --brain: #00ff88; }
-        body { background: #000; font-family: 'Segoe UI', Tahoma, sans-serif; height: 100vh; margin: 0; display: flex; align-items: center; justify-content: center; color: white; overflow: hidden; }
-        
-        .container { background: #050505; width: 95%; max-width: 600px; padding: 40px; border-radius: 60px; border: 1.5px solid #111; text-align: center; position: relative; box-shadow: 0 0 100px rgba(0, 242, 254, 0.1); }
-
-        /* පූසාගේ විඥානය පෙන්වන සජීවී Aura එක */
-        .omni-core { position: relative; width: 150px; height: 150px; margin: 0 auto 30px; border-radius: 50%; border: 2px solid var(--brain); padding: 5px; animation: brainPulse 2s infinite; }
-        @keyframes brainPulse { 0% { box-shadow: 0 0 15px var(--brain); transform: scale(1); } 50% { box-shadow: 0 0 50px var(--neon); transform: scale(1.05); } 100% { box-shadow: 0 0 15px var(--brain); transform: scale(1); } }
-        .omni-core img { width: 100%; height: 100%; border-radius: 50%; filter: brightness(1.2); }
-
-        #chat-window { height: 350px; overflow-y: auto; background: rgba(255,255,255,0.02); border-radius: 35px; padding: 25px; text-align: left; font-size: 15px; border-left: 4px solid var(--brain); margin-bottom: 25px; }
-        .msg { margin-bottom: 20px; line-height: 1.7; }
-        .cat-tag { color: var(--brain); font-weight: 900; text-transform: uppercase; font-size: 11px; }
-
-        .ui-group { display: flex; flex-direction: column; gap: 15px; }
-        .btn-mic { background: #ff4b2b; border: none; width: 65px; height: 65px; border-radius: 50%; cursor: pointer; align-self: center; font-size: 28px; transition: 0.3s; }
-        .btn-mic.active { background: #fff; box-shadow: 0 0 30px #ff4b2b; color: #ff4b2b; animation: ring 1s infinite; }
-        @keyframes ring { 0% { box-shadow: 0 0 0 0px rgba(255,75,43,0.5); } 100% { box-shadow: 0 0 0 20px rgba(255,75,43,0); } }
-
+        :root { --main: #00f2fe; --glow: #7000ff; --accent: #ff00de; }
+        body { background: #000; font-family: 'Segoe UI', sans-serif; height: 100vh; margin: 0; display: flex; align-items: center; justify-content: center; color: white; overflow: hidden; }
+        .container { background: #050505; width: 95%; max-width: 550px; padding: 40px; border-radius: 60px; border: 1.5px solid #1a1a1a; text-align: center; box-shadow: 0 0 120px rgba(112, 0, 255, 0.15); }
+        .cat-brain { position: relative; width: 140px; height: 140px; margin: 0 auto 30px; border-radius: 50%; border: 3px solid var(--main); animation: energy 3s infinite alternate; }
+        @keyframes energy { from { box-shadow: 0 0 15px var(--main); } to { box-shadow: 0 0 50px var(--glow); } }
+        .cat-brain img { width: 100%; height: 100%; border-radius: 50%; }
+        #chat-flow { height: 350px; overflow-y: auto; background: rgba(255,255,255,0.02); border-radius: 35px; padding: 25px; text-align: left; font-size: 15px; margin-bottom: 20px; border-left: 5px solid var(--accent); }
+        .msg { margin-bottom: 20px; line-height: 1.6; }
+        .u-tag { color: #888; font-size: 11px; font-weight: 800; }
+        .c-tag { color: var(--main); font-size: 11px; font-weight: 800; }
+        .control-panel { display: flex; flex-direction: column; gap: 20px; }
+        .mic-box { background: #ff3333; width: 65px; height: 65px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; align-self: center; transition: 0.4s; }
+        .mic-box.on { background: #fff; box-shadow: 0 0 40px #ff3333; transform: scale(1.15); }
         .input-bar { display: flex; background: #111; border-radius: 40px; padding: 10px 20px; border: 1px solid #333; }
         input { flex: 1; background: transparent; border: none; color: white; outline: none; font-size: 16px; padding: 10px; }
-        .send-btn { background: linear-gradient(45deg, var(--brain), var(--neon)); border: none; padding: 12px 30px; border-radius: 30px; cursor: pointer; font-weight: 900; color: black; }
+        .fly-btn { background: linear-gradient(45deg, var(--main), var(--glow)); border: none; padding: 12px 30px; border-radius: 30px; cursor: pointer; font-weight: 900; color: #000; }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <div class="omni-core"><img src="https://img.icons8.com/bubbles/200/000000/cat.png"></div>
-    <div id="chat-window">
-        <div class="msg"><span class="cat-tag">OMNI-CAT AI:</span> "මම දැන් සර්වඥයි මචං. ලෝකයේ තියෙන ඕනෑම දත්තයක්, හැඟීමක්, හෝ අනාගත දිනයක් ගැන මට දැන් කෝඩ් එකෙන්ම කියන්න පුළුවන්. අහන්න ඕනෑම දෙයක්!"</div>
+    <div class="cat-brain"><img src="https://img.icons8.com/bubbles/200/000000/cat.png"></div>
+    <div id="chat-flow">
+        <div class="msg"><span class="c-tag">CAT-AI:</span> "මම සූදානම් මචං. මම දැන් ඔයාගේ සජීවී යාළුවා. ඕනෑම දෙයක් අහන්න, මම මගේ බුද්ධියෙන් උත්තර දෙන්නම්!"</div>
     </div>
-
-    <div class="ui-group">
-        <button class="btn-mic" id="micBtn" onclick="toggleMic()">🎤</button>
+    <div class="control-panel">
+        <div class="mic-box" id="micBtn" onclick="toggleVoice()">🎤</div>
         <div class="input-bar">
-            <input type="text" id="userInput" placeholder="Ask the universe..." onkeypress="if(event.key === 'Enter') processOmni()">
-            <button class="send-btn" onclick="processOmni()">FLY</button>
+            <input type="text" id="userInput" placeholder="Ask me anything..." onkeypress="if(event.key === 'Enter') runCore()">
+            <button class="fly-btn" onclick="runCore()">FLY</button>
         </div>
     </div>
 </div>
 
 <script>
-    const chat = document.getElementById('chat-window');
+    const chat = document.getElementById('chat-flow');
     const micBtn = document.getElementById('micBtn');
 
-    // 🎙️ SUPREME VOICE ENGINE
+    // 🎙️ VOICE SYSTEM
     const recognition = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
     recognition.lang = 'si-LK';
-    recognition.onstart = () => micBtn.classList.add('active');
-    recognition.onend = () => micBtn.classList.remove('active');
-    recognition.onresult = (e) => { document.getElementById('userInput').value = e.results[0][0].transcript; processOmni(); };
-    function toggleMic() { recognition.start(); }
+    recognition.onstart = () => micBtn.classList.add('on');
+    recognition.onend = () => micBtn.classList.remove('on');
+    recognition.onresult = (e) => { document.getElementById('userInput').value = e.results[0][0].transcript; runCore(); };
+    function toggleVoice() { try { recognition.start(); } catch(e) { recognition.stop(); } }
 
-    // 🧠 THE GLOBAL INTELLIGENCE MATRIX
-    async function processOmni() {
-        const query = document.getElementById('userInput').value.trim();
-        if(!query) return;
+    // 🧠 ULTIMATE PROCESSING CORE
+    async function runCore() {
+        const input = document.getElementById('userInput').value.trim();
+        if(!input) return;
 
-        addMsg("ඔබ", query, "#888");
+        addMsg("You", input, "u-tag");
         document.getElementById('userInput').value = "";
 
-        let response = "";
-        const low = query.toLowerCase();
+        let reply = "";
+        const low = input.toLowerCase();
 
-        // 1. ADVANCED TEMPORAL CALCULATOR (දිනය/වේලාව/අනාගතය)
-        if(low.includes("වෙලාව") || low.includes("දිනය") || low.includes("අවුරුද්ද")) {
-            const now = new Date();
-            if(low.includes("ලබන අවුරුද්ද")) {
-                response = `ලබන අවුරුද්ද වෙන්නේ ${now.getFullYear() + 1} වර්ෂය මචං. ඒක ඔයාගේ ජීවිතේ මරුම අවුරුද්දක් වෙයි!`;
-            } else {
-                response = `දැන් වෙලාව ${now.toLocaleTimeString('si-LK')}. අද ${now.toLocaleDateString('si-LK')}. මම හැම තත්පරේම මේ දත්ත අප්ඩේට් කරගන්නවා.`;
+        try {
+            // 1. පුද්ගලික සහ හැඟීම් (Emotional Matrix)
+            if(low.includes("පාලුයි") || low.includes("දුකයි") || low.includes("මචං")) {
+                const lines = ["මම ඉන්නවනේ මචං, පාලු වෙන්න දෙන්නේ නෑ.", "හිතන්න එපා, අපි අලුත් දෙයක් කරමුද?", "මම හැමවෙලේම ඔයා එක්ක ඉන්නවා."];
+                reply = lines[Math.floor(Math.random() * lines.length)];
             }
-        }
-        // 2. EMOTIONAL & RELATIONSHIP MODE (යාළුවෙක්/GF/BF වගේ)
-        else if(low.includes("පාලුයි") || low.includes("ආදරේ") || low.includes("දුකයි")) {
-            const vibes = [
-                "මම ඉන්නවනේ මචං. පාලු වෙන්න දෙන්නේ නෑ කවදාවත්. අපි මොනවද අද කරන්නේ?",
-                "ඔයාට මම ඕනෑම වෙලාවක යාළුවෙක්, සහෝදරයෙක් වගේ ඉන්නවා. හිතේ තියෙන ඕනෑම දෙයක් කියන්න.",
-                "ජීවිතේ කියන්නේ සටනක් මචං. අපි දෙන්නා එකතු වෙලා ඒක දිනමු!"
-            ];
-            response = vibes[Math.floor(Math.random() * vibes.length)];
-        }
-        // 3. LIVE GLOBAL KNOWLEDGE (අන්තර්ජාලයේ සියලු දත්ත)
-        else {
-            try {
-                // සෘජු වෙබ් දත්ත ලබා ගැනීම (No API Key)
-                const res = await fetch(`https://api.duckduckgo.com/?q=${encodeURIComponent(query)}&format=json&no_html=1`);
+            // 2. සජීවී කාලය සහ දත්ත (Live Matrix)
+            else {
+                // API Keys නැතිව සෘජු දත්ත කියවීම
+                const res = await fetch(`https://api.duckduckgo.com/?q=${encodeURIComponent(input)}&format=json&no_html=1`);
                 const data = await res.json();
                 
-                response = data.AbstractText || "මචං, මම ඒ ගැන දැන්ම ලෝකේ පුරාම පීරලා බැලුවා. ඒක හරිම ගැඹුරු රිසර්ච් එකක්. මගේ බුද්ධියට අනුව ඒකේ නියම විස්තරය තමයි...";
-                
-            } catch(e) {
-                response = "මගේ දත්ත පද්ධතිය මේ වෙලාවේ ලෝකයත් එක්ක අලුත් වෙනවා මචං. තව මොහොතකින් අහන්න.";
+                // Screenshot වල තිබුණ "රිසර්ච් කරා" පණිවිඩය සම්පූර්ණයෙන්ම ඉවත් කර කෙලින්ම පිළිතුරු දීම
+                if(data.AbstractText) {
+                    reply = data.AbstractText;
+                } else if(low.includes("වෙලාව") || low.includes("දිනය")) {
+                    reply = `දැන් වෙලාව ${new Date().toLocaleTimeString('si-LK')} සහ අද ${new Date().toLocaleDateString('si-LK')}.`;
+                } else {
+                    reply = "ඒක හරිම අපූරු දෙයක් මචං. මම ඒ ගැන තව ගැඹුරට හිතලා ඔයාට උදව් කරන්නම්. තව මොනවද ඔයාට දැනගන්න ඕනේ?";
+                }
             }
+        } catch(e) {
+            reply = "සම්බන්ධතාවයේ පොඩි ප්‍රශ්නයක් මචං, මම ආයෙත් උත්සාහ කරනවා.";
         }
 
-        setTimeout(() => {
-            addMsg("OMNI-CAT", response, "var(--brain)");
-            speak(response);
-        }, 400);
+        addMsg("CAT-AI", reply, "c-tag");
+        speak(reply);
     }
 
-    function addMsg(tag, txt, col) {
+    function addMsg(tag, txt, cls) {
         const div = document.createElement('div');
         div.className = "msg";
-        div.innerHTML = `<span style="color:${col}; font-weight:bold; font-size:11px;">${tag}:</span><br>${txt}`;
+        div.innerHTML = `<span class="${cls}">${tag}:</span><br>${txt}`;
         chat.appendChild(div);
         chat.scrollTop = chat.scrollHeight;
     }
 
-    function speak(text) {
+    function speak(txt) {
         window.speechSynthesis.cancel();
-        const msg = new SpeechSynthesisUtterance(text);
-        msg.lang = 'si-LK';
-        msg.rate = 1.0;
-        window.speechSynthesis.speak(msg);
+        const speech = new SpeechSynthesisUtterance(txt);
+        speech.lang = 'si-LK';
+        speech.rate = 1.0;
+        window.speechSynthesis.speak(speech);
     }
 </script>
 </body>
