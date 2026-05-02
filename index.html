@@ -3,29 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SMART AI CAT - Pro</title>
+    <title>SMART AI CAT - Unlimited Brain</title>
     <style>
-        body { background: #121212; font-family: 'Segoe UI', sans-serif; height: 100vh; margin: 0; display: flex; align-items: center; justify-content: center; color: white; }
-        .container { background: #1e1e1e; width: 90%; max-width: 400px; padding: 30px; border-radius: 40px; border: 2px solid #00f2fe; text-align: center; box-shadow: 0 0 20px #00f2fe; }
-        /* පින්තූරේ ලස්සනට පේන්න මෙතන වෙනස් කළා */
-        .cat-box img { width: 150px; height: 150px; border-radius: 50%; border: 4px solid #00f2fe; background: #000; object-fit: contain; }
-        #status { margin: 20px 0; font-size: 16px; min-height: 80px; color: #00f2fe; line-height: 1.4; }
-        input { width: 85%; padding: 15px; border-radius: 20px; border: none; margin-bottom: 10px; background: #333; color: white; outline: none; }
-        button { width: 100%; padding: 15px; border-radius: 20px; border: none; font-weight: bold; cursor: pointer; margin-bottom: 10px; font-size: 16px; }
+        body { background: #0a0a0a; font-family: 'Segoe UI', sans-serif; height: 100vh; margin: 0; display: flex; align-items: center; justify-content: center; color: white; overflow: hidden; }
+        .container { background: #161616; width: 90%; max-width: 400px; padding: 30px; border-radius: 40px; border: 2.5px solid #00f2fe; text-align: center; box-shadow: 0 0 30px rgba(0, 242, 254, 0.4); position: relative; }
+        .cat-box img { width: 140px; height: 140px; border-radius: 50%; border: 4px solid #00f2fe; background: #000; object-fit: contain; }
+        #status { margin: 20px 0; font-size: 15px; min-height: 120px; max-height: 180px; overflow-y: auto; color: #00f2fe; line-height: 1.6; text-align: left; padding: 10px; border-radius: 10px; background: rgba(0,0,0,0.3); }
+        input { width: 85%; padding: 15px; border-radius: 20px; border: 1px solid #333; margin-bottom: 10px; background: #222; color: white; outline: none; }
+        button { width: 100%; padding: 15px; border-radius: 20px; border: none; font-weight: bold; cursor: pointer; margin-bottom: 10px; font-size: 16px; transition: 0.3s; }
         .btn-ask { background: #00f2fe; color: #000; }
         .btn-voice { background: #ff758c; color: white; }
+        /* Scrollbar එක ලස්සන කිරීම */
+        #status::-webkit-scrollbar { width: 5px; }
+        #status::-webkit-scrollbar-thumb { background: #00f2fe; border-radius: 10px; }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <h2 style="color: #00f2fe; letter-spacing: 2px;">SMART AI CAT 🐾</h2>
+    <h2 style="color: #00f2fe; letter-spacing: 2px; margin-top: 0;">SMART AI CAT 🐾</h2>
     <div class="cat-box">
         <img src="https://img.icons8.com/bubbles/200/000000/cat.png" alt="Smart Cat">
     </div>
-    <div id="status">Hello Boss Chathruka! I'm ready to chat.</div>
-    <input type="text" id="userInput" placeholder="I'm bored..." onkeypress="if(event.key === 'Enter') askCat()">
-    <button class="btn-ask" onclick="askCat()">ප්‍රසංගෙන් අහන්න</button>
+    <div id="status">Boss Chathruka, I am now in "Unlimited Mode". Ask me anything about anything!</div>
+    <input type="text" id="userInput" placeholder="Ask me about Sri Lanka or history..." onkeypress="if(event.key === 'Enter') askCat()">
+    <button class="btn-ask" onclick="askCat()">පූසාගෙන් අහන්න</button>
     <button class="btn-voice" onclick="startVoice()">🎤 Voice Live</button>
 </div>
 
@@ -35,28 +37,41 @@
         const status = document.getElementById('status');
         if(!input) return;
 
-        status.innerText = "Thinking... 🐈";
+        status.innerText = "Processing... 🧠🐾";
         let lowInput = input.toLowerCase();
         let response = "";
 
-        // 🧠 Friendly AI Brain - අපි පූසාව පණ ගන්වමු
-        if(lowInput.includes("bored")) {
-            response = "Oh no! If you're bored, let's talk about something fun! Do you want me to tell you a cat joke or some space facts?";
+        // 1. කාලය සහ දිනය (සීමා රහිතව)
+        if(lowInput.includes("time")) {
+            response = "The current time is " + new Date().toLocaleTimeString() + ". Time waits for no one, Boss!";
         } 
-        else if(lowInput.includes("time")) {
-            response = "The time is " + new Date().toLocaleTimeString() + ", Boss! Make every second count.";
+        else if(lowInput.includes("date") || lowInput.includes("today")) {
+            response = "Today is " + new Date().toDateString() + ". It's a wonderful day to gain some knowledge!";
         }
-        else if(lowInput.includes("hi") || lowInput.includes("hello")) {
-            response = "Hey there! I was just taking a nap. What's on your mind?";
-        }
+        // 2. ගැඹුරු දැනුම සහ ඕනෑම දෙයක් ගැන විස්තර කිරීමේ හැකියාව (Advanced Logic)
         else {
             try {
-                // සර්ච් එකකට යන්න කලින් පූසා යාළුවෙක් වගේ උත්තරයක් දෙනවා
-                const res = await fetch(`https://api.duckduckgo.com/?q=${encodeURIComponent(input)}&format=json&no_html=1`);
-                const data = await res.json();
-                response = data.AbstractText || "That's interesting! Tell me more about that, I'm listening.";
+                // මුලින්ම Wikipedia summary එකක් ගන්න උත්සාහ කරනවා
+                const wikiRes = await fetch(`https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(input)}`);
+                const wikiData = await wikiRes.json();
+                
+                if (wikiData.extract) {
+                    // Wikipedia එකේ තියෙන විස්තරය තව ටිකක් මිත්‍රශීලී කරනවා
+                    response = "According to my knowledge base: " + wikiData.extract;
+                } else {
+                    // Wikipedia එකේ නැතිනම් DuckDuckGo හරහා සජීවීව බලනවා
+                    const ddgRes = await fetch(`https://api.duckduckgo.com/?q=${encodeURIComponent(input)}&format=json&no_html=1`);
+                    const ddgData = await ddgRes.json();
+                    
+                    if(ddgData.AbstractText) {
+                        response = ddgData.AbstractText;
+                    } else {
+                        // මේක තමයි පූසාගේ "Internal Brain" එක - සර්ච් එකෙත් නැතිනම් හිතලා දෙන උත්තරය
+                        response = "That's a unique topic! While I don't have a direct database entry for '" + input + "', I can tell you that in the world of AI, everything is connected. Can you give me more context so I can analyze it deeper for you?";
+                    }
+                }
             } catch(e) {
-                response = "My brain is a bit fuzzy right now, can you say that again?";
+                response = "I'm having a small brain glitch, but I'm back! Can you repeat that?";
             }
         }
 
